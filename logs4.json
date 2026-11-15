@@ -1,0 +1,482 @@
+﻿[
+    {
+        "type":  "stdout",
+        "created":  1794759578123,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Running build in Washington, D.C., USA (East) â iad1",
+                        "id":  "1794759578123566836311800000",
+                        "date":  1794759578123,
+                        "serial":  "1794759578123566836311800000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759578124,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Build machine configuration: 2 cores, 8 GB",
+                        "id":  "1794759578124566836311800000",
+                        "date":  1794759578124,
+                        "serial":  "1794759578124566836311800000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759578137,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Retrieving list of deployment files...",
+                        "id":  "1794759578137566836311800000",
+                        "date":  1794759578137,
+                        "serial":  "1794759578137566836311800000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759578243,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Previous build caches not available.",
+                        "id":  "1794759578243566836311800000",
+                        "date":  1794759578243,
+                        "serial":  "1794759578243566836311800000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759578464,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Downloading 56 deployment files...",
+                        "id":  "1794759578464566836311800000",
+                        "date":  1794759578464,
+                        "serial":  "1794759578464566836311800000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759581293,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Running \"vercel build\"",
+                        "id":  "1794759581293497960083200000",
+                        "date":  1794759581293,
+                        "serial":  "1794759581293497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759581305,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Vercel CLI 65.14.0",
+                        "id":  "1794759581305497960083200000",
+                        "date":  1794759581305,
+                        "serial":  "1794759581305497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759581410,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "WARNING! Due to `builds` existing in your configuration file, the Build and Development Settings defined in your Project Settings will not apply. Learn More: https://vercel.link/unused-build-settings",
+                        "id":  "1794759581410497960083200000",
+                        "date":  1794759581410,
+                        "serial":  "1794759581410497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759582021,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Warning: Detected \"engines\": { \"node\": \"\u003e=22.13.0\" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: https://vercel.link/node-version",
+                        "id":  "1794759582021497960083200000",
+                        "date":  1794759582021,
+                        "serial":  "1794759582021497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759582032,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Installing dependencies...",
+                        "id":  "1794759582032497960083200000",
+                        "date":  1794759582032,
+                        "serial":  "1794759582032497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759582703,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "npm warn Unknown env config \"cache-dir\". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.",
+                        "id":  "1794759582703497960083200000",
+                        "date":  1794759582703,
+                        "serial":  "1794759582703497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759584384,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "",
+                        "id":  "1794759584384497960083200000",
+                        "date":  1794759584384,
+                        "serial":  "1794759584384497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759584384,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "added 104 packages in 2s",
+                        "id":  "1794759584384497960083200001",
+                        "date":  1794759584384,
+                        "serial":  "1794759584384497960083200001"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759584385,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "",
+                        "id":  "1794759584385497960083200000",
+                        "date":  1794759584385,
+                        "serial":  "1794759584385497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759584385,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "36 packages are looking for funding",
+                        "id":  "1794759584385497960083200001",
+                        "date":  1794759584385,
+                        "serial":  "1794759584385497960083200001"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759584385,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "  run `npm fund` for details",
+                        "id":  "1794759584385497960083200002",
+                        "date":  1794759584385,
+                        "serial":  "1794759584385497960083200002"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759584386,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:",
+                        "id":  "1794759584386497960083200000",
+                        "date":  1794759584386,
+                        "serial":  "1794759584386497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759584386,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)",
+                        "id":  "1794759584386497960083200001",
+                        "date":  1794759584386,
+                        "serial":  "1794759584386497960083200001"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759584387,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "npm warn install-scripts",
+                        "id":  "1794759584387497960083200000",
+                        "date":  1794759584387,
+                        "serial":  "1794759584387497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759584387,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve \u003cpkg\u003e` to allow.",
+                        "id":  "1794759584387497960083200001",
+                        "date":  1794759584387,
+                        "serial":  "1794759584387497960083200001"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759584734,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Using TypeScript 5.9.3 (local user-provided)",
+                        "id":  "1794759584734497960083200000",
+                        "date":  1794759584734,
+                        "serial":  "1794759584734497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759586128,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "api/index.ts(1,27): error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when \u0027--moduleResolution\u0027 is \u0027node16\u0027 or \u0027nodenext\u0027. Did you mean \u0027../src/app.js\u0027?",
+                        "id":  "1794759586128497960083200000",
+                        "date":  1794759586128,
+                        "serial":  "1794759586128497960083200000"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759586128,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "",
+                        "id":  "1794759586128497960083200001",
+                        "date":  1794759586128,
+                        "serial":  "1794759586128497960083200001"
+                    }
+    },
+    {
+        "type":  "stderr",
+        "created":  1794759588938,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Build Completed in /vercel/output [7s]",
+                        "id":  "1794759588938497960083200000",
+                        "date":  1794759588938,
+                        "serial":  "1794759588938497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759589000,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Deploying outputs...",
+                        "id":  "1794759589000497960083200000",
+                        "date":  1794759589000,
+                        "serial":  "1794759589000497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759595697,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Deployment completed",
+                        "id":  "1794759595697497960083200000",
+                        "date":  1794759595697,
+                        "serial":  "1794759595697497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759595702,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Creating build cache...",
+                        "id":  "1794759595702497960083200000",
+                        "date":  1794759595702,
+                        "serial":  "1794759595702497960083200000"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759597563,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Created build cache: 2s",
+                        "id":  "1794759597563497960083200002",
+                        "date":  1794759597563,
+                        "serial":  "1794759597563497960083200002"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759597563,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Uploading build cache [11.66 MB]",
+                        "id":  "1794759597563497960083200003",
+                        "date":  1794759597563,
+                        "serial":  "1794759597563497960083200003"
+                    }
+    },
+    {
+        "type":  "stdout",
+        "created":  1794759597751,
+        "payload":  {
+                        "deploymentId":  "dpl_2cvNcVhrKE9TknWoDRB72pFi2ive",
+                        "info":  {
+                                     "type":  "build",
+                                     "name":  "bld_78pqo52us",
+                                     "entrypoint":  "."
+                                 },
+                        "text":  "Build cache uploaded: 188.000ms",
+                        "id":  "1794759597751497960083200000",
+                        "date":  1794759597751,
+                        "serial":  "1794759597751497960083200000"
+                    }
+    }
+]

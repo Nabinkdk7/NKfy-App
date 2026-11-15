@@ -23,6 +23,9 @@ import { initials } from '@/utils/format';
 
 type Quality = AppSettings['audioQuality'];
 
+const ANDROID_URL = (process.env.EXPO_PUBLIC_ANDROID_DOWNLOAD_URL || '').trim();
+const DEFAULT_ANDROID_APK_URL = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.0/app-debug.apk';
+
 function tap() {
   void Haptics.selectionAsync().catch(() => undefined);
 }
@@ -67,6 +70,31 @@ export default function SettingsScreen() {
   const [updateStatus, setUpdateStatus] = useState<'idle' | 'checking' | 'available' | 'latest' | 'error'>('idle');
   const [latestVersion, setLatestVersion] = useState<string>('');
   const [downloadUrl, setDownloadUrl] = useState<string>('');
+
+  const handleDownloadNow = async () => {
+    tap();
+    if (!webInstall.isWeb || typeof window === 'undefined') return;
+    const ua = String(window.navigator?.userAgent || '').toLowerCase();
+    const isAndroid = /android/.test(ua);
+    const isIOS = /iphone|ipad|ipod/.test(ua) || (window.navigator as any).userAgentData?.platform === 'iOS';
+
+    if (isAndroid) {
+      const url = ANDROID_URL || DEFAULT_ANDROID_APK_URL;
+      window.location.href = url; // start the download immediately
+      return;
+    }
+    if (isIOS) {
+      const result = await webInstall.promptInstall();
+      if (result === 'unavailable') {
+        toast('Safari: Share → Add to Home Screen');
+      }
+      return;
+    }
+    const result = await webInstall.promptInstall();
+    if (result === 'unavailable') {
+      toast('Use your browser menu → "Add to Home screen" / "Install app"');
+    }
+  };
 
   const checkForUpdates = async () => {
     setUpdateStatus('checking');
@@ -485,25 +513,13 @@ export default function SettingsScreen() {
       </SettingSection>
 
       {webInstall.isWeb && !webInstall.isStandalone ? (
-        <SettingSection title="Install">
+        <SettingSection title="Download">
           <SettingRow
             icon="download"
             label="Download NKfy"
-            description="Install the app on this phone from your browser (Add to Home Screen). This option disappears once installed."
+            description="Tap to start the download instantly. No extra steps. On Android this downloads the app; on other devices it installs the app from the browser."
             onPress={() => {
-              void (async () => {
-                const result = await webInstall.promptInstall();
-                if (result === 'installed') return;
-                if (result === 'unavailable') {
-                  toast('Use your browser menu → "Add to Home screen" / "Install app"');
-                  return;
-                }
-                if (result === 'accepted') {
-                  toast('NKfy will be installed on this device', 'success');
-                  return;
-                }
-                toast('Install dismissed');
-              })();
+              void handleDownloadNow();
             }}
             last
           />

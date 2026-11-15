@@ -1,6 +1,6 @@
 {
   "name": "nkfy-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "description": "NKfy API — accounts, playlists, and licensed music discovery",
@@ -12,7 +12,8 @@
     "start": "node dist/index.js",
     "compile": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "tsx --test src/**/*.test.ts"
+    "test": "tsx --test src/**/*.test.ts",
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -32,3 +33,4 @@
     "typescript": "^5.8.3"
   }
 }
+

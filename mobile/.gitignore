@@ -42,3 +42,5 @@ yarn-error.*
 
 .vercel
 .env*
+
+dist-web-prod/

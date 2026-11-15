@@ -1,0 +1,113 @@
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  useFonts,
+} from '@expo-google-fonts/inter';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { AudioHost } from '@/audio/AudioHost';
+import { ToastHost } from '@/components/Toast';
+import { useAuthStore } from '@/stores/authStore';
+import { useLibraryStore } from '@/stores/libraryStore';
+import { colors } from '@/theme';
+
+if (Platform.OS !== 'web') {
+  void SplashScreen.preventAutoHideAsync().catch(() => undefined);
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 5 * 60 * 1000,
+      gcTime: 30 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+export default function RootLayout() {
+  const [fontsLoaded, fontError] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+  });
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    void useAuthStore.getState().restore();
+    // Touch persisted stores so they hydrate before the first frame settles.
+    useLibraryStore.getState();
+  }, []);
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      setReady(true);
+      if (Platform.OS !== 'web') {
+        void SplashScreen.hideAsync().catch(() => undefined);
+      }
+    }
+  }, [fontError, fontsLoaded]);
+
+  useEffect(() => {
+    if (Platform.OS !== 'web' || typeof document === 'undefined') return;
+    const id = 'nkfy-web-reset';
+    if (document.getElementById(id)) return;
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = `
+      *:focus, *:focus-visible { outline: none !important; }
+      button, [role="button"], a { outline: none !important; box-shadow: none !important; }
+      button:hover, [role="button"]:hover { background-color: rgba(255,255,255,0.04); }
+      input, textarea { outline: none !important; }
+    `;
+    document.head.appendChild(style);
+  }, []);
+
+  if (!ready) return null;
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: colors.background },
+            animation: 'slide_from_right',
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+          <Stack.Screen
+            name="player"
+            options={{
+              presentation: 'fullScreenModal',
+              animation: 'slide_from_bottom',
+            }}
+          />
+          <Stack.Screen
+            name="queue"
+            options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+          />
+          <Stack.Screen
+            name="auth"
+            options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+          />
+        </Stack>
+        <AudioHost />
+        <ToastHost />
+      </SafeAreaProvider>
+    </QueryClientProvider>
+  );
+}

@@ -1,0 +1,89 @@
+{
+  "expo": {
+    "name": "NKfy",
+    "slug": "nkfy",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "nkfy",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#08090B"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nkfy.app",
+      "infoPlist": {
+        "NSAppleMusicUsageDescription": "NKfy reads the music already saved on your device so you can play your own library.",
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    },
+    "android": {
+      "package": "com.nkfy.app",
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": true,
+      "permissions": [
+        "android.permission.READ_MEDIA_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#08090B",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/favicon.png",
+      "name": "NKfy — Feel The Music",
+      "shortName": "NKfy",
+      "themeColor": "#08090B",
+      "backgroundColor": "#08090B"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-image",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#08090B",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160
+        }
+      ],
+      [
+        "react-native-audio-api",
+        {
+          "enableFFmpeg": true,
+          "iosBackgroundMode": true,
+          "androidForegroundService": true,
+          "androidFSTypes": [
+            "mediaPlayback"
+          ],
+          "androidPermissions": [
+            "android.permission.POST_NOTIFICATIONS",
+            "android.permission.MODIFY_AUDIO_SETTINGS",
+            "android.permission.FOREGROUND_SERVICE",
+            "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+          ]
+        }
+      ],
+      "expo-secure-store",
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

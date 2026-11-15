@@ -1,0 +1,9 @@
+{
+  "platforms": ["android", "apple"],
+  "android": {
+    "modules": ["com.nkfy.localmusic.NkfyLocalMusicModule"]
+  },
+  "ios": {
+    "modules": ["NkfyLocalMusicModule"]
+  }
+}

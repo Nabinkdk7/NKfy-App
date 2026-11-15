@@ -64,6 +64,10 @@ export function createApp() {
   app.use('/api/auth', authRoutes);
   app.use('/api/playlists', playlistRoutes);
   app.use('/api/favorites', favoritesRoutes);
+  app.get('/api/health', (_req: any, res: any) => {
+    res.json({ ok: true });
+  });
+
   app.use('/api', discoverRoutes);
 
   app.get('/', (_req: any, res: any) => {

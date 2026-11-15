@@ -39,3 +39,5 @@ mobile/.expo/
 # Temp
 tmp/
 temp/
+
+logs.json

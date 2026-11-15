@@ -1,5 +1,4 @@
-// @ts-ignore
-const { createApp } = await import('../dist/app.js');
+import { createApp } from '../src/app';
 
 // Vercel invokes this module as a serverless function. The Express app is
 // itself a request handler, so it can be exported directly.

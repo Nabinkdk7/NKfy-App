@@ -1,6 +1,1 @@
-{
-  "regions": ["bom1"],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
-  ]
-}
+{ "regions": ["bom1"] }

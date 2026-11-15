@@ -1,0 +1,15 @@
+{
+  "name": "NKfy – Feel The Music",
+  "short_name": "NKfy",
+  "description": "Stream, discover, and play your music with NKfy.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08090B",
+  "theme_color": "#08090B",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

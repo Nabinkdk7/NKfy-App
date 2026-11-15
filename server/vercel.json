@@ -1,3 +1,7 @@
 {
-  "regions": ["bom1"]
+  "regions": ["bom1"],
+  "outputDirectory": "public",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index" }
+  ]
 }

@@ -15,6 +15,7 @@ import { requestLocalMusicAccess, scanLocalMusic, localMusicAvailable } from '@/
 import { useAuthStore } from '@/stores/authStore';
 import { eqPresets, useEqualizerStore } from '@/stores/equalizerStore';
 import { useLibraryStore, type AppSettings } from '@/stores/libraryStore';
+import { useWebInstall } from '@/hooks/useWebInstall';
 import { usePlayerStore } from '@/stores/playerStore';
 import { toast } from '@/stores/uiStore';
 import { colors, fonts, radii, spacing } from '@/theme';
@@ -59,6 +60,7 @@ export default function SettingsScreen() {
   const eqEnabled = useEqualizerStore((state) => state.enabled);
   const eqPresetId = useEqualizerStore((state) => state.presetId);
   const [creditHovered, setCreditHovered] = useState(false);
+  const webInstall = useWebInstall();
 
   const [syncing, setSyncing] = useState<'push' | 'pull' | null>(null);
   const [lastSyncAt, setLastSyncAt] = useState<number | null>(null);
@@ -481,6 +483,32 @@ export default function SettingsScreen() {
           last
         />
       </SettingSection>
+
+      {webInstall.isWeb && !webInstall.isStandalone ? (
+        <SettingSection title="Install">
+          <SettingRow
+            icon="download"
+            label="Download NKfy"
+            description="Install the app on this phone from your browser (Add to Home Screen). This option disappears once installed."
+            onPress={() => {
+              void (async () => {
+                const result = await webInstall.promptInstall();
+                if (result === 'installed') return;
+                if (result === 'unavailable') {
+                  toast('Use your browser menu → "Add to Home screen" / "Install app"');
+                  return;
+                }
+                if (result === 'accepted') {
+                  toast('NKfy will be installed on this device', 'success');
+                  return;
+                }
+                toast('Install dismissed');
+              })();
+            }}
+            last
+          />
+        </SettingSection>
+      ) : null}
 
       <SettingSection title="About">
         <SettingRow icon="logo" label="NKfy" description="Feel The Music" value={`v${version}`} />

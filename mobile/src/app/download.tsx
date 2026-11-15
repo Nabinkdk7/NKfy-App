@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
@@ -9,6 +9,7 @@ import { Icon } from '@/components/Icon';
 import { Screen } from '@/components/Screen';
 import { colors, fonts, spacing } from '@/theme';
 import { toast } from '@/stores/uiStore';
+import { useWebInstall } from '@/hooks/useWebInstall';
 
 const ANDROID_URL = (process.env.EXPO_PUBLIC_ANDROID_DOWNLOAD_URL || '').trim();
 const IOS_URL = (process.env.EXPO_PUBLIC_IOS_DOWNLOAD_URL || '').trim();
@@ -28,22 +29,8 @@ function isDirectAppUrl(url: string) {
 }
 
 export default function DownloadScreen() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isStandalone, setIsStandalone] = useState(false);
-
-  useEffect(() => {
-    if (Platform.OS !== 'web' || typeof window === 'undefined') return;
-    const standalone =
-      window.matchMedia?.('(display-mode: standalone)')?.matches ||
-      (window.navigator as any).standalone === true;
-    setIsStandalone(standalone);
-    const handler = (e: any) => {
-      e.preventDefault?.();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler as any);
-    return () => window.removeEventListener('beforeinstallprompt', handler as any);
-  }, []);
+  const webInstall = useWebInstall();
+  const isStandalone = webInstall.isStandalone;
 
   const open = async (url: string, label: string) => {
     if (!url) {
@@ -62,17 +49,12 @@ export default function DownloadScreen() {
       toast('NKfy is already installed on this device');
       return;
     }
-    if (deferredPrompt) {
-      try {
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        setDeferredPrompt(null);
-        return;
-      } catch {
-        // fall through to instructions
-      }
+    const result = await webInstall.promptInstall();
+    if (result === 'unavailable' || result === 'dismissed') {
+      toast('Use your browser menu → "Add to Home screen" / "Install app"');
+    } else if (result === 'accepted') {
+      toast('NKfy will be installed on this device', 'success');
     }
-    toast('Use your browser menu → "Add to Home screen" / "Install app"');
   };
 
   const androidIsDirect = isDirectAppUrl(ANDROID_URL);
@@ -93,6 +75,7 @@ export default function DownloadScreen() {
         </Text>
       </View>
 
+      {webInstall.isWeb ? (
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Install on this device (recommended)</Text>
         <Text style={styles.cardBody}>
@@ -112,6 +95,7 @@ export default function DownloadScreen() {
           </Text>
         ) : null}
       </View>
+      ) : null}
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Android (APK / Play Store)</Text>
@@ -201,7 +185,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   cardTitle: {
-    fontFamily: fonts.semi,
+    fontFamily: fonts.semibold,
     fontSize: 16,
     color: colors.text,
   },
@@ -214,13 +198,13 @@ const styles = StyleSheet.create({
   hint: {
     fontFamily: fonts.regular,
     fontSize: 12,
-    color: colors.textDim,
+    color: colors.textMuted,
     lineHeight: 17,
   },
   footnote: {
     fontFamily: fonts.regular,
     fontSize: 11,
-    color: colors.textDim,
+    color: colors.textMuted,
     textAlign: 'center',
     marginBottom: spacing.lg,
   },

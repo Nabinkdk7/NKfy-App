@@ -1,7 +1,11 @@
-import cors from 'cors';
-import express from 'express';
-import rateLimit from 'express-rate-limit';
-import helmet from 'helmet';
+import { createRequire } from 'node:module';
+import type { NextFunction, Request, Response } from 'express';
+
+const require = createRequire(import.meta.url);
+const express = require('express') as any;
+const cors = require('cors') as any;
+const rateLimit = require('express-rate-limit') as any;
+const helmet = require('helmet') as any;
 
 import { config } from './config.js';
 import authRoutes from './routes/auth.js';
@@ -62,7 +66,7 @@ export function createApp() {
   app.use('/api/favorites', favoritesRoutes);
   app.use('/api', discoverRoutes);
 
-  app.get('/', (_req, res) => {
+  app.get('/', (_req: any, res: any) => {
     res.json({
       name: 'NKfy API',
       tagline: 'Feel The Music',

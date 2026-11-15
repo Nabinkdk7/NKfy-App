@@ -13,6 +13,38 @@ export function localMusicAvailable(): boolean {
   }
 }
 
+/**
+ * Returns a uri the native player can reliably open. On Android the scanner
+ * returns `content://` ids; those are copied to the app cache first. iOS
+ * returns playable `ipod-library://` urls directly.
+ */
+export async function prepareLocalTrackUri(uri: string, filename?: string): Promise<string> {
+  if (!uri) return uri;
+  if (uri.startsWith('http://') || uri.startsWith('https://') || uri.startsWith('file://')) {
+    return uri;
+  }
+  if (uri.startsWith('ipod-library://')) return uri;
+  try {
+    const copy = NkfyLocalMusic?.copyToCache;
+    if (copy) return await copy(uri, filename);
+  } catch {
+    return uri;
+  }
+  return uri;
+}
+
+/**
+ * Drops the local-playback cache; the next scan/play cycle will refill it.
+ * Fire-and-forget — errors are intentionally ignored.
+ */
+export function pruneLocalCache(): void {
+  try {
+    NkfyLocalMusic?.clearLocalCache?.();
+  } catch {
+    // Cache pruning is best effort.
+  }
+}
+
 export async function requestLocalMusicAccess(): Promise<LocalAccess> {
   if (!NkfyLocalMusic) return 'unavailable';
 

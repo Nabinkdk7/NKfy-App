@@ -3,6 +3,9 @@ package com.nkfy.localmusic
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.MediaStore
+import java.io.File
+import java.io.FileOutputStream
+import java.security.MessageDigest
 import expo.modules.kotlin.exception.CodedException
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
@@ -89,6 +92,56 @@ class NkfyLocalMusicModule : Module() {
       }
 
       songs
+    }
+
+    AsyncFunction("copyToCache") { (uri: String, filename: String?) ->
+      val context = appContext.reactContext
+        ?: throw CodedException("The Android context is not available")
+
+      val parsedUri = Uri.parse(uri)
+      val extension = filename
+        ?.substringAfterLast('.', missingDelimiterValue = "")
+        ?.lowercase()
+        ?.takeIf { it.isNotBlank() }
+        ?: when {
+          uri.contains("audio/mpeg", ignoreCase = true) || uri.contains("mp3", ignoreCase = true) -> "mp3"
+          uri.contains("audio/mp4", ignoreCase = true) || uri.contains("m4a", ignoreCase = true) -> "m4a"
+          uri.contains("audio/aac", ignoreCase = true) || uri.contains("aac", ignoreCase = true) -> "aac"
+          uri.contains("audio/ogg", ignoreCase = true) || uri.contains("ogg", ignoreCase = true) -> "ogg"
+          uri.contains("audio/flac", ignoreCase = true) || uri.contains("flac", ignoreCase = true) -> "flac"
+          uri.contains("audio/wav", ignoreCase = true) || uri.contains("wav", ignoreCase = true) -> "wav"
+          else -> "mp3"
+        }
+
+      val digest = MessageDigest.getInstance("SHA-256").digest(uri.toByteArray())
+      val hash = digest.joinToString("") { "%02x".format(it) }.take(32)
+      val safeName = filename
+        ?.replace(Regex("[^A-Za-z0-9._-]"), "_")
+        ?.substringBeforeLast('.', missingDelimiterValue = "song")
+        ?.take(40)
+        ?.let { "nkfy-$hash-$it.$extension" }
+        ?: "nkfy-$hash.$extension"
+
+      val directory = File(context.cacheDir, "nkfy-local-cache").apply { mkdirs() }
+      val target = File(directory, safeName)
+      if (target.exists() && target.length() > 0) {
+        "file://${target.absolutePath.replace(File.separatorChar, '/')}"
+      } else {
+        context.contentResolver.openInputStream(parsedUri)?.use { input ->
+          FileOutputStream(target).use { output -> input.copyTo(output) }
+        }
+        "file://${target.absolutePath.replace(File.separatorChar, '/')}"
+      }
+    }
+
+    Function("clearLocalCache") {
+      val context = appContext.reactContext
+        ?: throw CodedException("The Android context is not available")
+      val directory = File(context.cacheDir, "nkfy-local-cache")
+      if (directory.exists()) {
+        directory.listFiles()?.forEach { file -> try { file.delete() } catch (_: Exception) { } }
+      }
+      true
     }
 
     Function("isAvailable") {

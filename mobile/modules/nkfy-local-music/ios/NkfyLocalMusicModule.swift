@@ -61,6 +61,15 @@ public class NkfyLocalMusicModule: Module {
       }
     }
 
+    AsyncFunction("copyToCache") { (uri: String, _: String?) in
+      // iOS media URLs can be played directly through AVFoundation.
+      promise.resolve(uri)
+    }
+
+    Function("clearLocalCache") {
+      true
+    }
+
     Function("isAvailable") {
       true
     }

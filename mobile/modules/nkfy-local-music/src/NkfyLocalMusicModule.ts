@@ -20,6 +20,8 @@ export interface NkfyLocalMusicModule {
   scan(): Promise<NativeLocalSong[]>;
   requestPermission(): Promise<string>;
   getPermissionStatus(): Promise<string>;
+  copyToCache(uri: string, filename?: string): Promise<string>;
+  clearLocalCache(): boolean;
   isAvailable(): boolean;
 }
 

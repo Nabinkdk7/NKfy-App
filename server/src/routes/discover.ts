@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 import { config, providerAvailability } from '../config.js';
 import { curatedPlaylists, genres } from '../data/curated.js';
+import { findArtistMatches, allKnownArtists } from '../data/artists.js';
 import { searchAudius, trendingAudius } from '../providers/audius.js';
 import { resolveJamendoStreamUrl, searchJamendo } from '../providers/jamendo.js';
 import { searchYouTube } from '../providers/youtube.js';
@@ -14,7 +15,7 @@ const router = Router();
 
 const searchCache = new Map<
   string,
-  { tracks: NormalizedTrack[]; youtube: NormalizedTrack[]; expiresAt: number }
+  { tracks: NormalizedTrack[]; youtube: NormalizedTrack[]; matchedArtists: string[]; expiresAt: number }
 >();
 
 const searchQuerySchema = z.object({
@@ -33,6 +34,10 @@ router.get('/version', (_req, res) => {
 
 router.get('/providers', (_req, res) => {
   res.json({ providers: providerAvailability });
+});
+
+router.get('/discover/artists', (_req, res) => {
+  res.json({ artists: allKnownArtists, total: allKnownArtists.length });
 });
 
 router.get('/genres', (_req, res) => {
@@ -107,7 +112,8 @@ router.get(
   '/search',
   asyncHandler(async (req, res) => {
     const { q, limit = 20 } = searchQuerySchema.parse(req.query);
-    const cacheKey = `${q.toLowerCase()}:${limit}`;
+    const artistMatches = findArtistMatches(q, 4);
+    const cacheKey = `${q.toLowerCase()}:${limit}:${artistMatches.length}`;
     const cached = searchCache.get(cacheKey);
 
     if (cached && cached.expiresAt > Date.now()) {
@@ -115,16 +121,19 @@ router.get(
         query: q,
         tracks: cached.tracks,
         youtube: cached.youtube,
+        matchedArtists: artistMatches,
         providers: providerAvailability,
       });
       return;
     }
 
-    const [audius, jamendo, youtubeGlobal, youtubeNp] = await Promise.allSettled([
+    const [audius, jamendo, youtubeGlobal, youtubeNp, ...artistResults] = await Promise.allSettled([
       searchAudius(q, limit),
       searchJamendo(q, Math.min(limit, 25)),
       searchYouTube(q, Math.min(Math.max(limit, 10), 25)),
       searchYouTube(q, 15, 'NP'),
+      ...artistMatches.map((artist) => searchAudius(artist, 30)),
+      ...artistMatches.map((artist) => searchJamendo(artist, 20)),
     ]);
 
     const normalizedQuery = q.trim().replace(/\\s+/g, ' ');
@@ -141,11 +150,10 @@ router.get(
     const priorityWeight = (track: NormalizedTrack): number => {
       const haystack = `${track.title} ${track.artist} ${track.genre ?? ''} ${track.album ?? ''}`.toLowerCase();
       let weight = 0;
-      if (/nepal|nepali/.test(haystack)) weight += 3;
-      if (/hindi|bollywood/.test(haystack)) weight += 3;
-      if (/english/.test(haystack)) weight += 2;
-      if (/metal/.test(haystack)) weight += 3;
-      // Official track boost
+      if (/nepal|nepali/.test(haystack)) weight += 4;
+      if (/hindi|bollywood/.test(haystack)) weight += 4;
+      if (/english|hollywood/.test(haystack)) weight += 3;
+      if (/metal|heavy metal/.test(haystack)) weight += 4;
       if (/official/.test(haystack)) weight += 2;
       return weight;
     };
@@ -156,6 +164,7 @@ router.get(
       for (const term of queryTerms) {
         if (haystack.includes(term)) score += 1;
       }
+      if (artistMatches.some((artist) => track.artist.toLowerCase().includes(artist.toLowerCase()))) score += 6;
       if (haystack.includes(phrase) && phrase.length > 3) score += 3;
       if (track.title.toLowerCase() === phrase) score += 8;
       if (track.title.toLowerCase().startsWith(phrase)) score += 4;
@@ -180,10 +189,14 @@ router.get(
       return true;
     });
 
+    const isArtistMatch = (track: NormalizedTrack) =>
+      artistMatches.some((artist) =>
+        track.artist.toLowerCase().includes(artist.toLowerCase())
+      );
     const minScore = queryTerms.length > 1 ? 1 : 0;
     const ranked = deduped
       .map((track) => ({ track, score: scoreTrack(track) }))
-      .filter(({ score }) => score >= minScore || queryTerms.length === 0)
+      .filter(({ score, track }) => score >= minScore || queryTerms.length === 0 || isArtistMatch(track))
       .sort((a, b) => b.score - a.score || Number(isNepali(b.track)) - Number(isNepali(a.track)))
       .map(({ track }) => track);
 
@@ -206,6 +219,7 @@ router.get(
     searchCache.set(cacheKey, {
       tracks: ranked,
       youtube: rankedYt,
+      matchedArtists: artistMatches,
       expiresAt: Date.now() + 3 * 60 * 1000,
     });
 
@@ -214,7 +228,7 @@ router.get(
       if (oldest) searchCache.delete(oldest);
     }
 
-    res.json({ query: q, tracks: ranked, youtube: rankedYt, providers: providerAvailability, errors });
+    res.json({ query: q, tracks: ranked, youtube: rankedYt, matchedArtists: artistMatches, providers: providerAvailability, errors });
   })
 );
 

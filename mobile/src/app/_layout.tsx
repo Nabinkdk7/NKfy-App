@@ -16,8 +16,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AudioHost } from '@/audio/AudioHost';
 import { ToastHost } from '@/components/Toast';
+import { UpdateBanner } from '@/components/UpdateBanner';
 import { useAuthStore } from '@/stores/authStore';
 import { useLibraryStore } from '@/stores/libraryStore';
+import { pruneLocalCache } from '@/native/localMusic';
 import { colors } from '@/theme';
 
 if (Platform.OS !== 'web') {
@@ -49,6 +51,7 @@ export default function RootLayout() {
     void useAuthStore.getState().restore();
     // Touch persisted stores so they hydrate before the first frame settles.
     useLibraryStore.getState();
+    pruneLocalCache();
   }, []);
 
   useEffect(() => {
@@ -139,6 +142,7 @@ export default function RootLayout() {
         </Stack>
         <AudioHost />
         <ToastHost />
+        <UpdateBanner />
       </SafeAreaProvider>
     </QueryClientProvider>
   );

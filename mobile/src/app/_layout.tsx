@@ -63,16 +63,48 @@ export default function RootLayout() {
   useEffect(() => {
     if (Platform.OS !== 'web' || typeof document === 'undefined') return;
     const id = 'nkfy-web-reset';
-    if (document.getElementById(id)) return;
-    const style = document.createElement('style');
-    style.id = id;
-    style.textContent = `
-      *:focus, *:focus-visible { outline: none !important; }
-      button, [role="button"], a { outline: none !important; box-shadow: none !important; }
-      button:hover, [role="button"]:hover { background-color: rgba(255,255,255,0.04); }
-      input, textarea { outline: none !important; }
-    `;
-    document.head.appendChild(style);
+    if (!document.getElementById(id)) {
+      const style = document.createElement('style');
+      style.id = id;
+      style.textContent = `
+        *:focus, *:focus-visible { outline: none !important; }
+        button, [role="button"], a { outline: none !important; box-shadow: none !important; }
+        button:hover, [role="button"]:hover { background-color: rgba(255,255,255,0.04); }
+        input, textarea { outline: none !important; }
+      `;
+      document.head.appendChild(style);
+    }
+
+    if (!document.querySelector('link[rel="manifest"]')) {
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = '/manifest.json';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('link[rel="apple-touch-icon"]')) {
+      const link = document.createElement('link');
+      link.rel = 'apple-touch-icon';
+      link.href = '/apple-touch-icon.png';
+      document.head.appendChild(link);
+    }
+    const metaDefs = [
+      { name: 'theme-color', content: '#08090B' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      { name: 'apple-mobile-web-app-title', content: 'NKfy' },
+    ] as const;
+    for (const def of metaDefs) {
+      if (!document.querySelector(`meta[name="${def.name}"]`)) {
+        const meta = document.createElement('meta');
+        meta.name = def.name;
+        meta.content = def.content;
+        document.head.appendChild(meta);
+      }
+    }
+
+    if ('serviceWorker' in navigator) {
+      void navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+    }
   }, []);
 
   if (!ready) return null;

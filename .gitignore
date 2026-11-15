@@ -41,3 +41,5 @@ tmp/
 temp/
 
 logs.json
+
+logs*.json

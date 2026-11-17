@@ -6,7 +6,7 @@ import Svg, { Path } from 'react-native-svg';
 import { colors, fonts, radii } from '@/theme';
 
 const API_URL = (process.env.EXPO_PUBLIC_API_URL || 'https://nkfy-server.vercel.app').replace(/\/+$/, '');
-const ANDROID_APK_URL = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.0/app-debug.apk';
+const ANDROID_APK_URL = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.1/NKfy-1.0.1.apk';
 
 function versionGreater(latest: string, current: string): boolean {
   const toParts = (value: string) =>
@@ -72,7 +72,7 @@ export function UpdateBanner() {
       } else if (/iphone|ipad|ipod/.test(ua)) {
         window.location.href = 'https://nkfymusic.vercel.app/download';
       } else {
-        window.location.href = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.0/app-debug.apk';
+        window.location.href = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.1/NKfy-1.0.1.apk';
       }
       return;
     }

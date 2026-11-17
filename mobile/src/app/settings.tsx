@@ -24,7 +24,7 @@ import { initials } from '@/utils/format';
 type Quality = AppSettings['audioQuality'];
 
 const ANDROID_URL = (process.env.EXPO_PUBLIC_ANDROID_DOWNLOAD_URL || '').trim();
-const DEFAULT_ANDROID_APK_URL = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.0/app-debug.apk';
+const DEFAULT_ANDROID_APK_URL = 'https://github.com/Nabinkdk7/NKfy-App/releases/download/v1.0.1/NKfy-1.0.1.apk';
 
 function tap() {
   void Haptics.selectionAsync().catch(() => undefined);
